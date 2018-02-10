@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lykke.Service.OperationsCache.Core.Domain;
@@ -26,7 +27,7 @@ namespace Lykke.Service.OperationsCache.Services
         {
             var value = await _redisCache.GetAsync(GetCacheKey(clientId));
             if (value == null)
-                return null;
+                return Array.Empty<HistoryEntry>();
 
             var cacheModel = MessagePackSerializer.Deserialize<CacheModel>(value);
             
