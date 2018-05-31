@@ -5,6 +5,7 @@ using Common.Log;
 using Lykke.Service.OperationsCache.AutorestClient;
 using Lykke.Service.OperationsCache.Client.Models;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace Lykke.Service.OperationsCache.Client
 {
@@ -16,7 +17,7 @@ namespace Lykke.Service.OperationsCache.Client
         public OperationsCacheClient(string serviceUrl, ILog log)
         {
             _log = log;
-            _apiClient = new OperationsCacheAPI(new Uri(serviceUrl));
+            _apiClient = new OperationsCacheAPI(new Uri(serviceUrl), new HttpClient());
         }
 
         public void Dispose()
@@ -30,8 +31,8 @@ namespace Lykke.Service.OperationsCache.Client
         public async Task<IEnumerable<HistoryClientEntry>> GetHistoryByClientId(string clientId)
         {
             var operations = await _apiClient.GetHistoryAsync(clientId);
-            return operations == null 
-                ? new List<HistoryClientEntry>() 
+            return operations == null
+                ? new List<HistoryClientEntry>()
                 : operations.Select(x => x.FromApiModel());
         }
     }
