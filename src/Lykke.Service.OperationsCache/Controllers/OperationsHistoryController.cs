@@ -27,7 +27,28 @@ namespace Lykke.Service.OperationsCache.Controllers
         [ProducesResponseType(typeof(IEnumerable<HistoryEntry>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetHistory(string clientId)
         {
+            if (string.IsNullOrWhiteSpace(clientId))
+                return BadRequest($"{nameof(clientId)} is empty");
+
             var history = await _historyCache.GetRecordsByClient(clientId);
+            return Ok(history);
+        }
+
+        /// <summary>
+        /// Get operations history for a particular asset.
+        /// </summary>
+        [HttpGet("assethistory")]
+        [SwaggerOperation("GetAssetHistory")]
+        [ProducesResponseType(typeof(IEnumerable<HistoryEntry>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAssetHistory(string clientId, string assetId)
+        {
+            if (string.IsNullOrWhiteSpace(clientId))
+                return BadRequest($"{nameof(clientId)} is empty");
+
+            if (string.IsNullOrWhiteSpace(assetId))
+                return BadRequest($"{nameof(assetId)} is empty");
+
+            var history = await _historyCache.GetAssetRecordsByClientAsync(clientId, assetId);
             return Ok(history);
         }
     }

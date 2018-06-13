@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Log;
-using Lykke.Service.OperationsCache.AutorestClient;
+using Lykke.Service.OperationsCache.Client.AutorestClient;
 using Lykke.Service.OperationsCache.Client.Models;
 using System.Collections.Generic;
 using System.Net.Http;

@@ -22,7 +22,7 @@ namespace Lykke.Service.OperationsCache.Services
             _redisCache = redisCache;
             _valuesPerPage = valuesPerPage;
         }
-        
+
         public async Task<IEnumerable<HistoryEntry>> GetRecordsByClient(string clientId, int page = 1)
         {
             var value = await _redisCache.GetAsync(GetCacheKey(clientId));
@@ -30,16 +30,28 @@ namespace Lykke.Service.OperationsCache.Services
                 return Array.Empty<HistoryEntry>();
 
             var cacheModel = MessagePackSerializer.Deserialize<CacheModel>(value);
-            
+
             int skip = cacheModel.Records.Count <= _valuesPerPage && page > 1
                 ? 0
                 : (page - 1) * _valuesPerPage;
-            
+
             return cacheModel.Records
                 .Skip(skip)
                 .Take(_valuesPerPage);
         }
-        
+
+        public async Task<IEnumerable<HistoryEntry>> GetAssetRecordsByClientAsync(string clientId, string assetId)
+        {
+            var value = await _redisCache.GetAsync(GetCacheKey(clientId));
+            if (value == null)
+                return Array.Empty<HistoryEntry>();
+
+            var cacheModel = MessagePackSerializer.Deserialize<CacheModel>(value);
+
+            return cacheModel.Records
+                .Where(r => r.Currency == assetId);
+        }
+
         private static string GetCacheKey(string clientId)
         {
             return $":client:{clientId}:history";
