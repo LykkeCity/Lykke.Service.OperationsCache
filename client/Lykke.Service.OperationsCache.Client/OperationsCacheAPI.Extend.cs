@@ -2,7 +2,7 @@
 using System.Net.Http;
 
 // ReSharper disable once CheckNamespace
-namespace Lykke.Service.OperationsCache.AutorestClient
+namespace Lykke.Service.OperationsCache.Client.AutorestClient
 {
     public partial class OperationsCacheAPI
     {

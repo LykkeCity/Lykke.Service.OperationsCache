@@ -1,4 +1,4 @@
-﻿using Lykke.Service.OperationsCache.AutorestClient.Models;
+﻿using Lykke.Service.OperationsCache.Client.AutorestClient.Models;
 
 namespace Lykke.Service.OperationsCache.Client.Models
 {
