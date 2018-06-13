@@ -74,5 +74,20 @@ namespace Lykke.Service.OperationsCache.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<IList<HistoryEntry>>> GetAssetHistoryWithHttpMessagesAsync(string clientId = default(string), string assetId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Get operations history for a set of assets.
+        /// </summary>
+        /// <param name='clientId'>
+        /// </param>
+        /// <param name='assetIds'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<HistoryEntry>>> GetAssetsHistoryWithHttpMessagesAsync(string clientId = default(string), IList<string> assetIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
     }
 }

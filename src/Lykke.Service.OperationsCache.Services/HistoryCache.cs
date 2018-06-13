@@ -40,7 +40,7 @@ namespace Lykke.Service.OperationsCache.Services
                 .Take(_valuesPerPage);
         }
 
-        public async Task<IEnumerable<HistoryEntry>> GetAssetRecordsByClientAsync(string clientId, string assetId)
+        public async Task<IEnumerable<HistoryEntry>> GetRecordsForAssetByClientAsync(string clientId, string assetId)
         {
             var value = await _redisCache.GetAsync(GetCacheKey(clientId));
             if (value == null)
@@ -50,6 +50,18 @@ namespace Lykke.Service.OperationsCache.Services
 
             return cacheModel.Records
                 .Where(r => r.Currency == assetId);
+        }
+
+        public async Task<IEnumerable<HistoryEntry>> GetRecordsForAssetsByClientAsync(string clientId, string[] assetIds)
+        {
+            var value = await _redisCache.GetAsync(GetCacheKey(clientId));
+            if (value == null)
+                return Array.Empty<HistoryEntry>();
+
+            var cacheModel = MessagePackSerializer.Deserialize<CacheModel>(value);
+
+            return cacheModel.Records
+                .Where(r => assetIds.Contains(r.Currency));
         }
 
         private static string GetCacheKey(string clientId)

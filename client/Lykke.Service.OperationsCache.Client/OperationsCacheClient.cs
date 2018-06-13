@@ -43,5 +43,13 @@ namespace Lykke.Service.OperationsCache.Client
                 ? new List<HistoryClientEntry>()
                 : operations.Select(x => x.FromApiModel());
         }
+
+        public async Task<IEnumerable<HistoryClientEntry>> GetAssetsHistoryByClientIdAsync(string clientId, string[] assetIds)
+        {
+            var operations = await _apiClient.GetAssetsHistoryAsync(clientId, assetIds);
+            return operations == null
+                ? new List<HistoryClientEntry>()
+                : operations.Select(x => x.FromApiModel());
+        }
     }
 }

@@ -114,5 +114,41 @@ namespace Lykke.Service.OperationsCache.Client.AutorestClient
                 }
             }
 
+            /// <summary>
+            /// Get operations history for a set of assets.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='clientId'>
+            /// </param>
+            /// <param name='assetIds'>
+            /// </param>
+            public static IList<HistoryEntry> GetAssetsHistory(this IOperationsCacheAPI operations, string clientId = default(string), IList<string> assetIds = default(IList<string>))
+            {
+                return operations.GetAssetsHistoryAsync(clientId, assetIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get operations history for a set of assets.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='clientId'>
+            /// </param>
+            /// <param name='assetIds'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<HistoryEntry>> GetAssetsHistoryAsync(this IOperationsCacheAPI operations, string clientId = default(string), IList<string> assetIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAssetsHistoryWithHttpMessagesAsync(clientId, assetIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
