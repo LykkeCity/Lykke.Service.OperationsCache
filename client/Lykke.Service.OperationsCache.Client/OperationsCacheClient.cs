@@ -11,12 +11,10 @@ namespace Lykke.Service.OperationsCache.Client
 {
     public class OperationsCacheClient : IOperationsCacheClient, IDisposable
     {
-        private readonly ILog _log;
         private IOperationsCacheAPI _apiClient;
 
-        public OperationsCacheClient(string serviceUrl, ILog log)
+        public OperationsCacheClient(string serviceUrl)
         {
-            _log = log;
             _apiClient = new OperationsCacheAPI(new Uri(serviceUrl), new HttpClient());
         }
 
