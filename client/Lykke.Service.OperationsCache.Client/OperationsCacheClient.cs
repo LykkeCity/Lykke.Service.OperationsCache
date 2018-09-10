@@ -11,15 +11,7 @@ namespace Lykke.Service.OperationsCache.Client
 {
     public class OperationsCacheClient : IOperationsCacheClient, IDisposable
     {
-        private readonly ILog _log; // Unused. Left for compatibility.
         private IOperationsCacheAPI _apiClient;
-
-        [Obsolete("Please, use the overload which does not consume logger.")]
-        public OperationsCacheClient(string serviceUrl, ILog log)
-        {
-            _log = log;
-            _apiClient = new OperationsCacheAPI(new Uri(serviceUrl), new HttpClient());
-        }
 
         public OperationsCacheClient(string serviceUrl)
         {
